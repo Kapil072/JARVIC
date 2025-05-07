@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Animation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js">
+        // Handle the user's input and send a request to the Flask app
+        function sendCommand(command) {
+            $.ajax({
+                url: '/respond',
+                type: 'POST',
+                 <!-- JSON.stringify({ 'command': command }), -->
+                success: function(response) {
+                    // Do something with the response from the Flask app
+                    console.log(response);
+                },
+                error: function(error) {
+                    // Handle errors
+                    console.error(error);
+                }
+            });
+        }
+
+        // Listen for user input and send the command to the Flask app
+        $('body').on('keypress', function(e) {
+            if (e.which == 13) {
+                var command = $('input').val();
+                sendCommand(command);
+                $('input').val('');
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="circle"></div>
+    </div>
+    <input type="text" placeholder="Type your command here...">
+</body>
+</html>
